@@ -57,8 +57,26 @@ body {
     background: aquamarine;
 }
 
+#game-over-message {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    font-weight: bold;
+    z-index: 10;
+}
+
 .clicked-button {
     transform: scale(.9);
+}
+
+#cover {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,.4);
+    position: absolute;
+    z-index: 9;
 }
 
 .card {

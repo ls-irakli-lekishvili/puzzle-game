@@ -128,6 +128,17 @@ class Board {
 
 
     gameOver() {
-        document.write('you won');
+        const element = document.createElement('div');
+        const cover = document.createElement('div');
+        element.innerText = 'You won!!!';
+        cover.id = 'cover';
+        element.id = 'game-over-message';
+        document.body.appendChild(cover);
+        document.body.appendChild(element);
+
+        document.cookie = `easy=${this.attempts}`;
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
     }
 }
