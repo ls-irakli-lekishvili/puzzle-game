@@ -9,12 +9,22 @@ class Board {
     attempts;
 
     constructor(width, container) {
-        this.attempts = selectElement('#attempts');
-        this.attempts.style.display = 'initial';
+        this.attempts = this.createAttempts()
         this.width = width;
         this.cardsLeft = width * width / 2;
         this.imageClasses = [...new Array(this.width * this.width)]
         this.container = container;
+    }
+
+    createAttempts() {
+        const element = document.createElement('div');
+        element.innerText = '0';
+        element.id = 'attempts';
+
+        document.body.appendChild(element);
+
+        return element;
+
     }
 
     createCards() {
