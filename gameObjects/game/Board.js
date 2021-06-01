@@ -136,7 +136,7 @@ class Board {
         document.body.appendChild(cover);
         document.body.appendChild(element);
 
-        document.cookie = `easy=${this.attempts}`;
+        document.cookie = `easy=${this.attempts.innerText}`;
         setTimeout(() => {
             location.reload();
         }, 1000);
