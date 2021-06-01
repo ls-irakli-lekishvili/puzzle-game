@@ -1,12 +1,123 @@
 class Board {
-    constructor() {
+    width;
+    container;
+    imageClasses;
+    previousCard;
+    previousCardId = null;
+    isOpenDisabled = false;
+    cardsLeft;
+    attempts;
+
+    constructor(width, container) {
+        this.attempts = selectElement('#attempts');
+        this.attempts.style.display = 'initial';
+        this.width = width;
+        this.cardsLeft = width * width / 2;
+        this.imageClasses = [...new Array(this.width * this.width)]
+        this.container = container;
     }
 
-    shuffle() {}
+    createCards() {
+        this.cards = [...new Array(this.width * this.width)]
+            .map((_, ind) => {
+                    return new Card(this.imageClasses[ind], ind)
+                        .createElement()
+                        .addEventOnCard(this.cardClickHandler, this);
+                }
+            );
+        return this;
+    }
 
-    getIcons() {}
+    cardClickHandler(card) {
+        if (card.isOpen || this.isOpenDisabled) return;
 
-    compareCards() {}
+        card.openCard();
 
-    gameOver() {}
+        this.updateCardStatus(card)
+
+
+    }
+
+    updateCardStatus(card) {
+        if (this.previousCardId === null) {
+            this.openFirstCard(card);
+            return;
+        }
+        if (this.previousCard.className === card.className) {
+            this.correctGuess();
+        } else {
+            this.wrongGuess(card);
+        }
+
+        this.attempts.innerText = (+this.attempts.innerText) + 1;
+
+    }
+
+
+    openFirstCard(card) {
+        this.previousCardId = card.id;
+        this.previousCard = card;
+    }
+
+    correctGuess() {
+        this.previousCardId = null;
+        this.cardsLeft--;
+        setTimeout(() => {
+            if (!this.cardsLeft) {
+                this.gameOver();
+            }
+        }, 200)
+
+    }
+
+    wrongGuess(card) {
+        this.isOpenDisabled = true;
+        setTimeout(() => {
+            this.previousCard.closeCard();
+            card.closeCard();
+            this.isOpenDisabled = false;
+        }, 400);
+        this.previousCardId = null;
+    }
+
+    drawBoard() {
+        this.cards.forEach(x => this.container.appendChild(x.card));
+        return this;
+    }
+
+    updateGridStyle() {
+        this.container.style.gridTemplate = `repeat(${this.width}, 1fr) / repeat(${this.width}, 1fr)`;
+        return this;
+    }
+
+    shuffle() {
+        this.imageClasses.forEach((_, index) => {
+            this.swap(index)
+        });
+        return this;
+    }
+
+    swap(index) {
+        const temp = this.imageClasses[index];
+        const index2 = this.getRandom(this.imageClasses.length);
+        this.imageClasses[index] = this.imageClasses[index2];
+        this.imageClasses[index2] = temp
+    }
+
+    getIcons() {
+        const classes = getIconClasses(this.width * this.width / 2);
+        this.imageClasses = this.imageClasses.map((cl, ind) => {
+            return classes[ind % classes.length];
+        })
+        return this;
+    }
+
+    getRandom(upperLimit) {
+        return Math.random() * upperLimit | 0
+    }
+
+
+    gameOver() {
+        document.write('you won');
+    }
 }

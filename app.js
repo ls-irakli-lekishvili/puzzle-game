@@ -4,14 +4,18 @@ function main() {
         .showLevels();
 
     levels.buttons.forEach(buttons => {
-        buttons.element.addEventListener('button-clicked', buttonClickedHandler);
+        buttons.element.addEventListener('button-clicked', (event) => buttonClickedHandler(event, levels));
     })
 }
 
-function buttonClickedHandler(event) {
-    const game = new GameScene(event.target.innerText,
-        selectElement('#game-container'))
+function buttonClickedHandler(event, levels) {
 
+    setTimeout(() => {
+        levels.hideLevels();
+        const game = new GameScene(event.target.innerText,
+            selectElement('#game-container'))
+            .startGame();
+    }, 200);
 }
 
 main();

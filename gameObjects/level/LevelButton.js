@@ -14,10 +14,10 @@ class LevelButton {
     addEventsOnButton() {
         this.element.addEventListener('mousedown', () => {
             this.element.classList.add('clicked-button');
-            this.dispatchCustomEvent();
         });
         this.element.addEventListener('mouseup', () => {
             this.element.classList.remove('clicked-button');
+            this.dispatchCustomEvent();
         })
         this.element.addEventListener('mouseleave', () => {
             this.element.classList.remove('clicked-button');
