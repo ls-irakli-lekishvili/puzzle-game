@@ -7,13 +7,15 @@ class Board {
     isOpenDisabled = false;
     cardsLeft;
     attempts;
+    gameMode;
 
-    constructor(width, container) {
+    constructor(width, container, gameMode) {
         this.attempts = this.createAttempts()
         this.width = width;
         this.cardsLeft = width * width / 2;
         this.imageClasses = [...new Array(this.width * this.width)]
         this.container = container;
+        this.gameMode = gameMode;
     }
 
     createAttempts() {
@@ -136,7 +138,7 @@ class Board {
         document.body.appendChild(cover);
         document.body.appendChild(element);
 
-        document.cookie = `easy=${this.attempts.innerText}`;
+        document.cookie = `${this.gameMode}=${this.attempts.innerText}`;
         setTimeout(() => {
             location.reload();
         }, 1000);

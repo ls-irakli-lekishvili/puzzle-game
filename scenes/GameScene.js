@@ -8,7 +8,7 @@ class GameScene {
 
     startGame() {
         if(this.gameMode in GAME_MODE_DIMENSIONS) {
-            this.board = new Board(GAME_MODE_DIMENSIONS[this.gameMode], this.container)
+            this.board = new Board(GAME_MODE_DIMENSIONS[this.gameMode], this.container, this.gameMode)
                 .getIcons()
                 .shuffle()
                 .createCards()
